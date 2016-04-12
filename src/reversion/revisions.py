@@ -511,7 +511,7 @@ class RevisionManager(object):
 
         The results are returned with the most recent versions first.
         """
-        content_type = ContentType.objects.db_manager(db).get_for_model(model)
+        content_type = ContentType.objects.db_manager(db).get_for_model(model, for_concrete_model=False)
         versions = self._get_versions(db).filter(
             content_type = content_type,
         ).select_related("revision")
@@ -567,7 +567,7 @@ class RevisionManager(object):
         The results are returned with the most recent versions first.
         """
         model_db = model_db or db
-        content_type = ContentType.objects.db_manager(db).get_for_model(model_class)
+        content_type = ContentType.objects.db_manager(db).get_for_model(model_class, for_concrete_model=False)
         live_pk_queryset = model_class._default_manager.db_manager(model_db).all().values_list("pk", flat=True)
         versioned_objs = self._get_versions(db).filter(
             content_type = content_type,

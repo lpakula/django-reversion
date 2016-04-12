@@ -102,7 +102,7 @@ class Command(BaseCommand):
         # Check all models for empty revisions.
         if default_revision_manager.is_registered(model_class):
             created_count = 0
-            content_type = ContentType.objects.db_manager(database).get_for_model(model_class)
+            content_type = ContentType.objects.db_manager(database).get_for_model(model_class, for_concrete_model=False)
             versioned_pk_queryset = Version.objects.using(database).filter(content_type=content_type).all()
             live_objs = model_class._default_manager.using(database).all()
             if has_int_pk(model_class):
