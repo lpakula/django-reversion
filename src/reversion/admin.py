@@ -365,7 +365,7 @@ class VersionAdmin(admin.ModelAdmin):
                         "has_absolute_url": False,
                         "form_url": mark_safe(request.path),
                         "opts": opts,
-                        "content_type_id": ContentType.objects.get_for_model(self.model).id,
+                        "content_type_id": ContentType.objects.get_for_model(self.model, for_concrete_model=False).id,
                         "save_as": False,
                         "save_on_top": self.save_on_top,
                         "changelist_url": reverse("%s:%s_%s_changelist" % (self.admin_site.name, opts.app_label, opts.model_name)),
@@ -448,7 +448,7 @@ class VersionMetaAdmin(VersionAdmin):
         
     def get_queryset(self, request):
         """Returns the annotated queryset."""
-        content_type = ContentType.objects.get_for_model(self.model)
+        content_type = ContentType.objects.get_for_model(self.model, for_concrete_model=False)
         pk = self.model._meta.pk
         if has_int_pk(self.model):
             version_table_field = "object_id_int"

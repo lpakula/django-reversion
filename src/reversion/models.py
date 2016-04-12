@@ -169,7 +169,7 @@ class Version(models.Model):
             for parent_class, field in obj._meta.concrete_model._meta.parents.items():
                 if obj._meta.proxy and parent_class == obj._meta.concrete_model:
                     continue
-                content_type = ContentType.objects.get_for_model(parent_class)
+                content_type = ContentType.objects.get_for_model(parent_class, for_concrete_model=False)
                 if field:
                     parent_id = force_text(getattr(obj, field.attname))
                 else:

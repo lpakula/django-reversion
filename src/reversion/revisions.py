@@ -95,7 +95,7 @@ class VersionAdapter(object):
     def get_version_data(self, obj, db=None):
         """Creates the version data to be saved to the version model."""
         object_id = force_text(obj.pk)
-        content_type = ContentType.objects.db_manager(db).get_for_model(obj)
+        content_type = ContentType.objects.db_manager(db).get_for_model(obj, for_concrete_model=False)
         if has_int_pk(obj.__class__):
             object_id_int = int(obj.pk)
         else:
